@@ -27,11 +27,11 @@ Users can add books, track reading status, and view their library.
    java -version
    
 4. **Run the program:**
-   javac Main.java
-   java Main
+   - javac Main.java
+   - java Main
    
 
-### Database Structure**
+### **Database Structure**
 Show the **tables** and relationships.  
 ```md
 ##  Database Structure
