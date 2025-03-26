@@ -12,8 +12,9 @@ Users can add books, track reading status, and view their library.
 - Simple command-line interface
 
 ## Tech Stack
-- **Java 17** ☕
-- **SQLite3** (Embedded Database) 
+- **Java 21** ☕
+- **SQLite** (Embedded Database)
+- **Maven** (Build & Dependency Management)
 - **IntelliJ IDEA** (IDE)
 
 ## 🔧 Installation
@@ -22,15 +23,14 @@ Users can add books, track reading status, and view their library.
    - git clone https://github.com/yourusername/book-on-the-shelf.git
    - cd book-on-the-shelf
 
-2. **Ensure you have Java 17 installed:**
-   java -version
+2. **Ensure you have Maven installed:**
+   mvn -version
 
-3. **Ensure SQLite3 is installed:**
-   sqlite3 --version   
+3. **SQLite JDBC Driver** (Already included in pom.xml, no need to install manually)   
    
 4. **Run the program:**
-   - javac Main.java
-   - java Main
+   - mvn clean install
+   - mvn exec:java
    
 
 ### **Database Structure**
