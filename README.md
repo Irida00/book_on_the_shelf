@@ -1,4 +1,4 @@
-# Book on the Slelf
+# Book on the Shelf
 
 Book on the Shelf is a simple Java-based console application for managing personal book collections.
 Users can add books, track reading status, and view their library.
