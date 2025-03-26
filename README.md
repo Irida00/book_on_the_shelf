@@ -13,18 +13,20 @@ Users can add books, track reading status, and view their library.
 
 ## Tech Stack
 - **Java 17** ☕
-- **SQLite** (Embedded Database) 
-- **JUnit 5** (Unit Testing) 
+- **SQLite3** (Embedded Database) 
 - **IntelliJ IDEA** (IDE)
 
 ## 🔧 Installation
 
 1. **Clone the repository:**
-   git clone https://github.com/yourusername/book-on-the-shelf.git
-   cd book-on-the-shelf
+   - git clone https://github.com/yourusername/book-on-the-shelf.git
+   - cd book-on-the-shelf
 
 2. **Ensure you have Java 17 installed:**
    java -version
+
+3. **Ensure SQLite3 is installed:**
+   sqlite3 --version   
    
 4. **Run the program:**
    - javac Main.java
