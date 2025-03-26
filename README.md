@@ -20,8 +20,8 @@ Users can add books, track reading status, and view their library.
 ## 🔧 Installation
 
 1. **Clone the repository:**
-   - git clone https://github.com/yourusername/book-on-the-shelf.git
-   - cd book-on-the-shelf
+   - git clone https://github.com/Irida00/book_on_the_shelf
+   - cd book_on_the_shelf/book-on-the-shelf
 
 2. **Ensure you have Maven installed:**
    mvn -version
