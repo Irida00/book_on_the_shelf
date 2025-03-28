@@ -65,7 +65,6 @@ public class DBManager {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
-            System.out.println("List of all books: ");
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String title = rs.getString("title");
@@ -99,13 +98,13 @@ public class DBManager {
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
+
             if (rs.next()) {
                 String title = rs.getString("title");
                 String author = rs.getString("author");
                 return new Book(id, title, author);
-            } else {
-                System.out.println("No book was found with that ID");
             }
+
         } catch (SQLException e) {
             System.out.println("Error getting book: " + e.getMessage());
         }
@@ -195,9 +194,8 @@ public class DBManager {
             if (rs.next()) {
                 String username = rs.getString("username");
                 return new User(id, username);
-            } else {
-                System.out.println("No user found with that ID!");
             }
+
         } catch (SQLException e) {
             System.out.println("Error getting the user: " + e.getMessage());
         }
@@ -263,9 +261,6 @@ public class DBManager {
             psmt.setString(3, status);
 
             psmt.executeUpdate();
-
-
-
             System.out.println("Successfully added book " + getBookById(book_id).getTitle()
                                 + " in " + getUserById(user_id).getUsername() + " 's "
                                 + status + " list!");
@@ -295,9 +290,9 @@ public class DBManager {
 
                 Book book = new Book(id, title, author);
                 books.add(book);
-                //System.out.println(title + " by " + author + " - Status: " + status);
+                System.out.println(title + " by " + author + " - Status: " + status);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
                 System.out.println("No books found for user ID: " + e.getMessage());
         }
 
@@ -306,17 +301,18 @@ public class DBManager {
 
     public static void updateUserBookStatus(int user_id, int book_id, String newStatus) {
         // Fetching the current status
-        String oldStatus = "Unknowm";
+        String oldStatus = "Unknown";
 
         String current_sql = "SELECT status FROM user_books WHERE user_id = ? AND book_id = ?";
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(current_sql)) {
             pstmt.setInt(1, user_id);
             pstmt.setInt(2, book_id);
             ResultSet rs = pstmt.executeQuery();
+
             if (rs.next()) {
                 oldStatus = rs.getString("status");
             }
-            System.out.println("Successfully fetched oldstatus: " + oldStatus );
+
         } catch (SQLException e) {
             System.out.println("Error fetching oldStatus: " + e.getMessage());
         }
@@ -332,9 +328,8 @@ public class DBManager {
 
             if (rowsUpdated > 0) {
                 System.out.println("Status changed from '" + oldStatus + "' to '" + newStatus);
-            } else {
-                System.out.println("USer or book with ID don't exist");
             }
+
         } catch (SQLException e) {
             System.out.println("Error updating the status: " + e.getMessage());
         }

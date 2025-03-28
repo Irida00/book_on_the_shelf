@@ -1,7 +1,7 @@
 import db.DBManager;
 import model.Book;
 import model.User;
-
+import util.ConsoleHelper;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,36 +26,70 @@ public class Main {
                     """);
             System.out.print("Choose an option: ");
 
-            String choice = scanner.nextLine();
+            String choice = scanner.nextLine().trim();
 
             switch (choice) {
                 case "1": //Create a new user
                     System.out.print("Enter username: ");
-                    String username = scanner.nextLine();
+                    String username = scanner.nextLine().trim();
                     DBManager.insertUser(new User(username));
                     break;
 
                 case "2": //Add a new book
                     System.out.print("Enter book title: ");
-                    String title = scanner.nextLine();
+                    String title = scanner.nextLine().trim();
                     System.out.print("Enter book author: ");
-                    String author = scanner.nextLine();
+                    String author = scanner.nextLine().trim();
                     DBManager.insertBook(new Book(title, author));
                     break;
 
                 case "3": //Assign a book to a user
-                    System.out.print("Enter user ID: ");
-                    int userId = Integer.parseInt(scanner.nextLine());
-                    System.out.print("Enter book ID: ");
-                    int bookId = Integer.parseInt(scanner.nextLine());
+                    if (!ConsoleHelper.hasUsers()) {
+                        System.out.println("No users found. Please add a user first.");
+                        break;
+                    }
+                    if (!ConsoleHelper.hasBooks()) {
+                        System.out.println("No books available in the system. Please add a book first.");
+                        break;
+                    }
+
+                    ConsoleHelper.displayAllUsers();
+                    ConsoleHelper.displayAllBooks();
+
+                    int userId = ConsoleHelper.readValidInt("Enter user ID: ");
+
+                    if(!ConsoleHelper.hasUser(userId)) {
+                        System.out.println("No user found with ID " + userId);
+                        break;
+                    }
+
+                    int bookId = ConsoleHelper.readValidInt("Enter book ID: ");
+
+                    if(!ConsoleHelper.hasBook(bookId)) {
+                        System.out.println("No book found with ID " + bookId);
+                        break;
+                    }
+
                     System.out.print("Enter book status (reading, wishlist, finished): ");
-                    String status = scanner.nextLine();
+                    String status = scanner.nextLine().trim();
                     DBManager.insertUserBook(userId, bookId, status);
                     break;
 
                 case "4": //View all books of a user
-                    System.out.print("Enter user ID: ");
-                    int viewUserId = Integer.parseInt(scanner.nextLine());
+                    if (!ConsoleHelper.hasUsers()) {
+                        System.out.println("No users found. Please add a user first.");
+                        break;
+                    }
+
+                    ConsoleHelper.displayAllUsers();
+
+                    int viewUserId = ConsoleHelper.readValidInt("Enter user ID: ");
+
+                    if(!ConsoleHelper.hasUser(viewUserId)) {
+                        System.out.println("No user found with ID " + viewUserId);
+                        break;
+                    }
+
                     List<Book> books = DBManager.getBooksByUser(viewUserId);
                     if (books.isEmpty()) {
                         System.out.println("No books found! You should start reading!");
@@ -67,37 +101,43 @@ public class Main {
                     break;
 
                 case "5": //Update book status
-                    System.out.print("Enter user ID: ");
-                    int updateUserId = Integer.parseInt(scanner.nextLine());
-                    System.out.print("Enter book ID: ");
-                    int updateBookId = Integer.parseInt(scanner.nextLine());
+                    if (!ConsoleHelper.hasUsers()) {
+                        System.out.println("No users found. Please add a user first.");
+                        break;
+                    }
+                    if (!ConsoleHelper.hasBooks()) {
+                        System.out.println("No books available in the system. Please add a book first.");
+                        break;
+                    }
+
+                    ConsoleHelper.displayAllUsers();
+                    ConsoleHelper.displayAllBooks();
+
+                    int updateUserId = ConsoleHelper.readValidInt("Enter user ID: ");
+
+                    if(!ConsoleHelper.hasUser(updateUserId)) {
+                        System.out.println("No user found with ID " + updateUserId);
+                        break;
+                    }
+
+                    int updateBookId = ConsoleHelper.readValidInt("Enter book ID: ");
+
+                    if(!ConsoleHelper.hasBook(updateBookId)) {
+                        System.out.println("No book found with ID " + updateBookId);
+                        break;
+                    }
+
                     System.out.print("Enter new status (reading, wishlist, finished): ");
-                    String newStatus = scanner.nextLine();
+                    String newStatus = scanner.nextLine().trim();
                     DBManager.updateUserBookStatus(updateUserId, updateBookId, newStatus);
                     break;
 
                 case "6": //View all users
-                    List<User> users = DBManager.getAllUsers();
-                    if (users.isEmpty()) {
-                        System.out.println("No users found");
-                    } else {
-                        System.out.print("All users:");
-                        for (User u : users) {
-                            System.out.println("ID: " + u.getId() + " |Username: " + u.getUsername());
-                        }
-                    }
+                    ConsoleHelper.displayAllUsers();
                     break;
 
                 case "7": //View all books
-                    List<Book> allBooks = DBManager.getAllBooks();
-                    if (allBooks.isEmpty()) {
-                        System.out.println("No books found");
-                    } else {
-                        System.out.print("All books:");
-                        for (Book b : allBooks) {
-                            System.out.println("ID: " + b.getId() + " |Title: " + b.getTitle() + " |Author: " + b.getAuthor());
-                        }
-                    }
+                    ConsoleHelper.displayAllBooks();
                     break;
 
                 case "8":
